@@ -85,8 +85,9 @@ def train(version, total_timesteps=1_000_000, n_envs=None):
         batch_size=256,
         verbose=1,
     )
-    model.learning_rate = 2e-4
-    model.lr_schedule = lambda _: 2e-4 # SB3 uses the schedule internally; set both
+    
+    model.learning_rate = 2e-5 # dr ponce recommendation
+    model.lr_schedule = lambda _: 2e-5 # SB3 uses the schedule internally; set both
     model.ent_coef = 0.001
     
     model.set_logger(configure(os.path.join(HERE, "tb_logs", f"v{version}"), ["stdout", "tensorboard"]))
