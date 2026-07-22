@@ -60,13 +60,15 @@ controller(command: Command, obs: Obs) -> joint_targets: np.ndarray  # shape (12
 ## Quick start
 
 ```bash
-# PID
-python controllers/pid/log_pid_run.py
-python controllers/pid/plot_pid_log.py
+# PID — run a tracking episode, then plot it
+python controllers/pid/log_pid_run.py      # -> run_log.npz
+python controllers/pid/plot_pid_log.py     # -> tracking.png, error.png
 
-# PPO — train
-python controllers/ppo/ppo_training.py
+# PPO — reproduce the best policy's eval (weights committed: v41)
+python controllers/ppo/ppo_log.py 41           # metrics + trajectory plot (+ video)
+mjpython controllers/ppo/ppo_watch.py 41       # live viewer (macOS: mjpython, else python)
 
-# PPO — eval (loads models/dog_ppo_v1.zip by default)
-python controllers/ppo/ppo_controller.py
+# PPO — train from scratch / fine-tune (optional)
+python controllers/ppo/ppo_training.py <version> [--steps N] [--envs K]
+python controllers/ppo/ppo_warmstart.py <from_version> <to_version> [--steps N] [--envs K]
 ```
