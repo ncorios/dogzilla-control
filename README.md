@@ -6,9 +6,9 @@ Goal: implement and benchmark PID, MPC, and PPO on standard dog locomotion.
 ## Status
 | Controller | Status |
 |------------|--------|
-| PID        | Done — ~16 mrad RMSE avg across joints |
+| PID        | Done: ~16 mrad RMSE avg across joints |
 | MPC        | In progress |
-| PPO        | Implemented — v1 model trained, eval results in `controllers/ppo/ppo_eval/` |
+| PPO        | Implemented: v41 model trained with a straight gallop, eval results in `controllers/ppo/ppo_eval/` |
 
 ## Directory
 
@@ -22,7 +22,7 @@ dogzilla-control/
 │   │   ├── plot_pid_log.py     # plot tracking + error from the logged run
 │   │   └── controler-v1.xml    # MuJoCo model for PID (torque / <motor> actuators)
 │   ├── mpc/
-│   │   └── mpc.py              # MPC controller — separate repo, not yet merged (stub)
+│   │   └── mpc.py              # MPC controller: separate repo, not yet merged (stub)
 │   └── ppo/
 │       ├── dogzilla_env.py     # custom Gymnasium env (12-DOF DOGZILLA S2 / XGO)
 │       ├── ppo_training.py     # train PPO from scratch (SB3)
@@ -37,7 +37,7 @@ dogzilla-control/
 │       ├── ppo_eval/           # eval outputs: metrics.json, trajectory.png, mp4, summary.csv
 │       └── tb_logs/            # TensorBoard training logs (gitignored)
 ├── envs/
-│   ├── Prueba2_19_03.xml       # shared MuJoCo scene
+│   ├── Prueba2_19_03.xml       # Original MuJoCo File - from advisor
 │   ├── assets/XGO/             # XGO mesh STLs
 │   ├── hardware.yaml           # physical robot spec (stub)
 │   └── chameleon/              # separate CAD deliverable — do not touch
@@ -47,14 +47,6 @@ dogzilla-control/
 ├── results/                    # PID run log (run_log.npz) + tracking/error plots
 ├── requirements.txt
 └── README.md
-```
-
-## Controller interface
-
-All three controllers share the same signature so they're swappable behind one benchmark harness:
-
-```python
-controller(command: Command, obs: Obs) -> joint_targets: np.ndarray  # shape (12,)
 ```
 
 ## Quick start
