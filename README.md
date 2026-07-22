@@ -10,27 +10,11 @@ Goal: implement and benchmark PID, MPC, and PPO on standard dog locomotion.
 | MPC        | In progress |
 | PPO        | Done: v41 walks ~18 m in a 1000-step episode (n=100 deterministic), 97% survival; eval in `controllers/ppo/ppo_eval/` |
 
-## What's being compared
+## Scope
 
-The comparison is **architecture-level, not controller-level**: a hand-designed gait with
-PID *torque* tracking versus a *learned position* policy. The physical DOGZILLA S2 exposes
-servo **position** control only, so the torque-PID arm models a capability the hardware
-doesn't have — it is a tracking baseline, not a locomotion result. Because PID/MPC track a
-reference (native metric: tracking RMSE) while PPO optimizes a reward, the controllers are
-compared on **task-level** metrics (distance, survival, drift), not on any shared internal
-score.
-
-Two kinds of claim are kept separate throughout:
-
-- **Controller claim (my own work):** the PID tracks its commanded joint setpoints to
-  **~16 mrad RMSE**. That is a statement about the controller.
-- **System claim (about a provided plant):** the PPO policy walks the quadruped **~18 m**
-  over a 1000-step episode. That is a statement about the whole system on a model authored
-  upstream — not a claim that the controller alone "solved locomotion."
-
-A hand-authored open-loop gait tracked to 16 mrad still barely translates (it has no model
-of ground contact or foot placement); MPC supplies that explicitly and PPO learns it from
-reward. That contrast is the contribution, not a leaderboard win.
+The MuJoCo plant models and their parameters were provided by a graduate student in the
+lab and are used unmodified. The contribution in this repo is the controllers themselves —
+the PID tracking controller, and the PPO learning environment, reward design, and training.
 
 ## Results
 
@@ -54,8 +38,7 @@ but pushed toward a ballistic bound; gait quality is the next target (AMP).
 |----------|-------|
 | ![PID tracking](results/PID_v1_tracking.png) | ![PID error](results/PID_v1_error.png) |
 
-~16 mrad RMSE across joints. Note the reference is an open-loop kinematic oscillator, so
-good tracking does **not** produce forward travel — see "What's being compared" above.
+~16 mrad RMSE across joints (per-joint 11.5–19.1).
 
 ## Directory
 
