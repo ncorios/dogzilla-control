@@ -75,8 +75,7 @@ dogzilla-control/
 ├── envs/
 │   ├── Prueba2_19_03.xml       # Original MuJoCo File - from advisor
 │   ├── assets/XGO/             # XGO mesh STLs
-│   ├── hardware.yaml           # physical robot spec (stub)
-│   └── chameleon/              # separate CAD deliverable — do not touch
+│   └── hardware.yaml           # physical robot spec (stub)
 ├── notes/                      # controller theory + MuJoCo reference notes
 ├── benchmark/
 │   └── benchmark.py            # task-level benchmark harness (pending MPC — stub)

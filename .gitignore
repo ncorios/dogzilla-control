@@ -55,6 +55,9 @@ mjmodel.mjb
 # SolidWorks / Office autosave-lock temp files
 ~$*
 
+# Chameleon CAD deliverable (separate project; kept out of this repo, files stay local)
+envs/chameleon/
+
 # macOS
 .DS_Store
 .AppleDouble
