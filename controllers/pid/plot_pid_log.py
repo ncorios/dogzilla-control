@@ -1,7 +1,7 @@
 """
 plot_log.py — plot desired vs actual joint angles and tracking error.
 
-Reads run_log.npz (written by log_run.py) from the same folder and saves two
+Reads run_log.npz (written by log_pid_run.py) from the same folder and saves two
 figures next to it:
     tracking.png   desired vs actual, 4 legs x 3 joints
     error.png      tracking error over time, grouped by joint type

@@ -1,7 +1,7 @@
 """
 log_pid_run.py — run the controller headless and save joint/desired/error arrays.
 
-Script reuses the PID class and the same gait + feedforward as Testpid (no viewer),
+Script reuses the PID class and the same gait + feedforward as test_pid (no viewer),
 then writes run_log.npz next to this file. Then run plot_pid_log.py to visualise.
 
     python log_pid_run.py
@@ -12,7 +12,7 @@ import mujoco
 from pid import PID
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-XML  = os.path.join(HERE, "controler-v1.xml")
+XML  = os.path.join(HERE, "controller-v1.xml")
 OUT  = os.path.join(HERE, "run_log.npz")
 T_SIM = 12.0   # seconds to simulate
 
@@ -23,7 +23,7 @@ mujoco.mj_resetDataKeyframe(model, data,
     mujoco.mj_name2id(model, mujoco.mjtObj.mjOBJ_KEY, "stand"))
 mujoco.mj_forward(model, data)        # make qfrc_bias valid on the first step
 
-# ── Setpoints / gains (same as Testpid) ─────────────────────────────────────────
+# ── Setpoints / gains (same as test_pid) ─────────────────────────────────────────
 desired_joint_angles = np.array([
     0.0, 0.65, -1.10,  0.0, 0.65, -1.10,
     0.0, 0.65, -1.10,  0.0, 0.65, -1.10,

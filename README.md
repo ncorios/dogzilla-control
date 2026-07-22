@@ -38,7 +38,7 @@ cross-version comparison in [`summary.csv`](controllers/ppo/ppo_eval/summary.csv
 limitation: the gait is a bounding/gallop, not a clean trot — energy shaping fixed foot-drag
 but pushed toward a ballistic bound; gait quality is the next target (AMP).
 
-**PID** — joint-setpoint tracking on the torque plant (`controler-v1.xml`):
+**PID** — joint-setpoint tracking on the torque plant (`controller-v1.xml`):
 
 | tracking | error |
 |----------|-------|
@@ -53,10 +53,10 @@ dogzilla-control/
 ├── controllers/
 │   ├── pid/
 │   │   ├── pid.py              # PID controller class (P/I/D + anti-windup + feedforward)
-│   │   ├── Testpid.py          # run the PID gait in the MuJoCo viewer
+│   │   ├── test_pid.py         # run the PID gait in the MuJoCo viewer
 │   │   ├── log_pid_run.py      # run headless, log joint/desired/error arrays -> run_log.npz
 │   │   ├── plot_pid_log.py     # plot tracking + error from the logged run
-│   │   └── controler-v1.xml    # MuJoCo model for PID (torque / <motor> actuators)
+│   │   └── controller-v1.xml   # MuJoCo model for PID (torque / <motor> actuators)
 │   ├── mpc/
 │   │   └── mpc.py              # MPC controller: separate repo, not yet merged (stub)
 │   └── ppo/
