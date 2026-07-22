@@ -73,11 +73,15 @@ controllers/ppo/models/*
 controllers/ppo/tb_logs/*
 !controllers/ppo/tb_logs/.gitkeep
 
-# Recorded videos (metrics.json and summary.csv under ppo_eval/ are NOT ignored)
+# Recorded rollout videos (large binaries; upload into the README directly instead)
 *.mp4
+
+# Per-version eval outputs are ignored by default; the published best model (v41)
+# and the cross-version summary are whitelisted below.
 controllers/ppo/ppo_eval/*
 !controllers/ppo/ppo_eval/.gitkeep
 !controllers/ppo/ppo_eval/how-to-read-outputs.md
+!controllers/ppo/ppo_eval/summary.csv
 
 # --- Published v41 (best model) artifacts: weights, metrics, trajectories ---
 # Un-ignore only these. The rollout .mp4 (upload into the README directly) and
@@ -85,6 +89,6 @@ controllers/ppo/ppo_eval/*
 !controllers/ppo/models/dog_ppo_v41.zip
 !controllers/ppo/ppo_eval/v41/
 controllers/ppo/ppo_eval/v41/*
-!controllers/ppo/ppo_eval/v41/metrics_great.json
+!controllers/ppo/ppo_eval/v41/metrics.json
 !controllers/ppo/ppo_eval/v41/trajectory_100_runs_v41.png
 !controllers/ppo/ppo_eval/v41/trajectory_ten_runs_v41.png
