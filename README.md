@@ -8,7 +8,50 @@ Goal: implement and benchmark PID, MPC, and PPO on standard dog locomotion.
 |------------|--------|
 | PID        | Done: ~16 mrad RMSE avg across joints |
 | MPC        | In progress |
-| PPO        | Implemented: v41 model trained with a straight gallop, eval results in `controllers/ppo/ppo_eval/` |
+| PPO        | Done: v41 walks ~18 m in a 1000-step episode (n=100 deterministic), 97% survival; eval in `controllers/ppo/ppo_eval/` |
+
+## What's being compared
+
+The comparison is **architecture-level, not controller-level**: a hand-designed gait with
+PID *torque* tracking versus a *learned position* policy. The physical DOGZILLA S2 exposes
+servo **position** control only, so the torque-PID arm models a capability the hardware
+doesn't have — it is a tracking baseline, not a locomotion result. Because PID/MPC track a
+reference (native metric: tracking RMSE) while PPO optimizes a reward, the controllers are
+compared on **task-level** metrics (distance, survival, drift), not on any shared internal
+score.
+
+Two kinds of claim are kept separate throughout:
+
+- **Controller claim (my own work):** the PID tracks its commanded joint setpoints to
+  **~16 mrad RMSE**. That is a statement about the controller.
+- **System claim (about a provided plant):** the PPO policy walks the quadruped **~18 m**
+  over a 1000-step episode. That is a statement about the whole system on a model authored
+  upstream — not a claim that the controller alone "solved locomotion."
+
+A hand-authored open-loop gait tracked to 16 mrad still barely translates (it has no model
+of ground contact or foot placement); MPC supplies that explicitly and PPO learns it from
+reward. That contrast is the contribution, not a leaderboard win.
+
+## Results
+
+**PPO (v41)** — deterministic rollouts, 100 episodes. Trajectory spread from reset noise:
+
+![PPO v41 trajectories (100 runs)](controllers/ppo/ppo_eval/v41/trajectory_100_runs_v41.png)
+
+Distance 18.04 m ± 2.11 (deterministic), survival 0.97; 16.13 m / 0.84 stochastic. Full
+numbers in [`controllers/ppo/ppo_eval/v41/metrics.json`](controllers/ppo/ppo_eval/v41/metrics.json);
+cross-version comparison in [`summary.csv`](controllers/ppo/ppo_eval/summary.csv). Honest
+limitation: the gait is a bounding/gallop, not a clean trot — energy shaping fixed foot-drag
+but pushed toward a ballistic bound; gait quality is the next target (AMP).
+
+**PID** — joint-setpoint tracking on the torque plant (`controler-v1.xml`):
+
+| tracking | error |
+|----------|-------|
+| ![PID tracking](results/PID_v1_tracking.png) | ![PID error](results/PID_v1_error.png) |
+
+~16 mrad RMSE across joints. Note the reference is an open-loop kinematic oscillator, so
+good tracking does **not** produce forward travel — see "What's being compared" above.
 
 ## Directory
 
@@ -33,8 +76,8 @@ dogzilla-control/
 │       ├── stand_test.py       # no-policy plant sanity check (holds the stand keyframe)
 │       ├── ppo-progress-log.md # per-version training + reward-shaping log
 │       ├── assets/             # ppo_dog.xml (position actuators) + XGO mesh STLs
-│       ├── models/             # saved model weights (*.zip, gitignored)
-│       ├── ppo_eval/           # eval outputs: metrics.json, trajectory.png, mp4, summary.csv
+│       ├── models/             # saved model weights (*.zip; only published v41 committed)
+│       ├── ppo_eval/           # summary.csv + published v41 metrics.json & trajectory plots
 │       └── tb_logs/            # TensorBoard training logs (gitignored)
 ├── envs/
 │   ├── Prueba2_19_03.xml       # Original MuJoCo File - from advisor
@@ -57,7 +100,7 @@ python controllers/pid/log_pid_run.py      # -> run_log.npz
 python controllers/pid/plot_pid_log.py     # -> tracking.png, error.png
 
 # PPO — reproduce the best policy's eval (weights committed: v41)
-python controllers/ppo/ppo_log.py 41           # metrics + trajectory plot (+ video)
+python controllers/ppo/ppo_log.py 41 --episodes 100   # committed metrics are n=100; default is 10
 mjpython controllers/ppo/ppo_watch.py 41       # live viewer (macOS: mjpython, else python)
 
 # PPO — train from scratch / fine-tune (optional)
