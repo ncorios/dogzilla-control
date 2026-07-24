@@ -83,7 +83,7 @@ action space is prob too big rn. instant instability. switch to resiudal action 
 
 BANG! v8 walks. goes in circles. next, penalize lateral yaw drift or reward moving in the forward facing direction.
 
-i added yaw and stability costs. somehow made it worse lol. switched to a more robuste val bc the one episode eval before was making me think the model was bad when it wasnt.
+i added yaw and stability costs. somehow made it worse. switched to a more robuste val bc the one episode eval before was making me think the model was bad when it wasnt.
 
 ## ok here i compiled some notes from other files
 
@@ -163,7 +163,7 @@ with stability 0 for 14 and then maybe healthy 0 for 15.
 
 ### v13
 _0.50 m / 1.0 surv · stoch 0.12 m / 0.2_
-ok back to circular motion lol. going to penalize y drift. y drift term when it turns 90
+ok back to circular motion. going to penalize y drift. y drift term when it turns 90
 degrees can penalize any motion tho so if it stops moving after turning, turn down eight.
 currently at .5. no circular motion without stability. likely with stability the easiest way
 to get reward is some inefficient circular motion that still has positive x displacement.
@@ -187,7 +187,7 @@ stability, crank forward to 8?
 
 ### v17
 _-0.02 m / 0.9 surv · stoch 0.12 m / 0.0_
-okay this stability term is fried lol. idk what to do either something punishing asymmetrical
+okay this stability term is fried. idk what to do either something punishing asymmetrical
 gait, force that in action space, limit speed maybe? or maybe think into exploring something
 with the other gyro sensors like punishing tilt but that might be the same as our current
 stability reward.

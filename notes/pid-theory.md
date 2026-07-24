@@ -167,7 +167,7 @@ torque_ff(theta) = torque computed from a model, not inherently standard but com
     | PID        | 0.6 * Ku  | 2 * Kp / Tu     | Kp * Tu / 8 |
 
     this gives a starting point. assumes first order dynamics + delay. 
-    finding K_u can damage hardware lol. 
+    finding K_u can damage hardware. 
     works kinda but u can get better results with a simpler method.
 
     practical method:
@@ -220,4 +220,6 @@ torque_ff(theta) = torque computed from a model, not inherently standard but com
     main:
     output = pid + tff
     also graph error over time
+
+    
     

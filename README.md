@@ -67,7 +67,7 @@ dogzilla-control/
 │       ├── ppo_log.py          # dual-mode eval -> metrics.json, trajectory.png, video
 │       ├── ppo_controller.py   # wrap a trained policy as controller(command, obs) -> (12)
 │       ├── stand_test.py       # no-policy plant sanity check (holds the stand keyframe)
-│       ├── ppo-progress-log.md # per-version training + reward-shaping log
+│       ├── ppo-progress-log.md # per-version training + reward-shaping log (unedited, informal)
 │       ├── assets/             # ppo_dog.xml (position actuators) + XGO mesh STLs
 │       ├── models/             # saved model weights (*.zip; only published v41 committed)
 │       ├── ppo_eval/           # summary.csv + published v41 metrics.json & trajectory plots
@@ -82,6 +82,13 @@ dogzilla-control/
 ├── results/                    # PID run log (run_log.npz) + tracking/error plots
 ├── requirements.txt
 └── README.md
+```
+
+## Setup
+
+```bash
+python -m venv .venv && source .venv/bin/activate
+pip install -r requirements.txt
 ```
 
 ## Quick start
